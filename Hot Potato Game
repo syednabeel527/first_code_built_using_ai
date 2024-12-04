@@ -1,0 +1,53 @@
+from collections import deque
+import random
+
+class HotPotatoGame:
+    def __init__(self):
+        self.players = deque()
+
+    def add_player(self, name):
+        self.players.append(name)
+        print(f">> Player {name} added to the game.\n")
+
+    def play_game(self):
+        if len(self.players) < 2:
+            print(">> Not enough players to start the game. Add more players.\n")
+            return
+
+        print("\nStarting the game!\n")
+        while len(self.players) > 1:
+            # Simulate passing the potato
+            num_passes = random.randint(1, 10)  # Random number of passes
+            print(f"Passing the potato {num_passes} times...")
+            self.players.rotate(-num_passes)
+            
+            # Remove the player holding the potato
+            eliminated_player = self.players.popleft()
+            print(f">> {eliminated_player} is eliminated!\n")
+
+        # The winner is the last player remaining
+        winner = self.players[0]
+        print(f"🎉 Congratulations {winner}, you are the winner! 🎉\n")
+
+def main():
+    game = HotPotatoGame()
+
+    while True:
+        print("1. Add a player")
+        print("2. Start the game")
+        print("3. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            name = input("Enter player name: ")
+            game.add_player(name)
+        elif choice == "2":
+            game.play_game()
+        elif choice == "3":
+            print("Exiting the game. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.\n")
+
+if __name__ == "__main__":
+    main()
